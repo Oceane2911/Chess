@@ -1,4 +1,5 @@
 public class Interface {
+    private static char[] letters={'A','B','C','D','E','F','G','H'};
     private Case[][] chess = {
             { new Case(), new Case(), new Case(), new Case(), new Case(), new Case(), new Case(), new Case() },
             { new Case(), new Case(), new Case(), new Case(), new Case(), new Case(), new Case(), new Case() },
@@ -13,6 +14,7 @@ public class Interface {
     public Interface(){
         init();
         display();
+        play();
     }
     private void init(){
         chess[0][0].piece = new Rook('B');
@@ -32,22 +34,22 @@ public class Interface {
         chess[1][6].piece = new Pawn('B');
         chess[1][7].piece = new Pawn('B');
         
-        chess[6][0].piece = new Rook('W');
-        chess[6][1].piece = new Knight('W');
-        chess[6][2].piece = new Bishop('W');
-        chess[6][3].piece = new Queen('W');
-        chess[6][4].piece = new King('W');
-        chess[6][5].piece = new Bishop('W');
-        chess[6][6].piece = new Knight('W');
-        chess[6][7].piece = new Rook('W');
-        chess[7][0].piece = new Pawn('W');
-        chess[7][1].piece = new Pawn('W');
-        chess[7][2].piece = new Pawn('W');
-        chess[7][3].piece = new Pawn('W');
-        chess[7][4].piece = new Pawn('W');
-        chess[7][5].piece = new Pawn('W');
-        chess[7][6].piece = new Pawn('W');
-        chess[7][7].piece = new Pawn('W');
+        chess[7][0].piece = new Rook('W');
+        chess[7][1].piece = new Knight('W');
+        chess[7][2].piece = new Bishop('W');
+        chess[7][3].piece = new Queen('W');
+        chess[7][4].piece = new King('W');
+        chess[7][5].piece = new Bishop('W');
+        chess[7][6].piece = new Knight('W');
+        chess[7][7].piece = new Rook('W');
+        chess[6][0].piece = new Pawn('W');
+        chess[6][1].piece = new Pawn('W');
+        chess[6][2].piece = new Pawn('W');
+        chess[6][3].piece = new Pawn('W');
+        chess[6][4].piece = new Pawn('W');
+        chess[6][5].piece = new Pawn('W');
+        chess[6][6].piece = new Pawn('W');
+        chess[6][7].piece = new Pawn('W');
     };
 
     private void display() {
@@ -70,4 +72,31 @@ public class Interface {
         }
         System.out.println("  A B C D E F G H ");
     }
+    private void play(){
+
+        
+        System.out.println("Quel est le pion que vous voulez déplacer ?");
+        int[] currentLocation =pickCase();
+        System.out.println("Où mettre la pièce ?");
+        int[] newLocation =pickCase();
+        
+
+    }
+    private int[] pickCase(){
+
+        String pieceLoc=Terminal.scan.nextLine();
+
+        char columnLetters =pieceLoc.charAt(0);
+        int line =7-((pieceLoc.charAt(1)-'0')-1);
+
+        int column=0;
+        for (int i = 0; i < letters.length; i++) {
+            if (letters[i]==columnLetters){
+                column=i;
+            }
+        }
+        int[] response={line ,column};
+        return response ;
+    }
+    
 }
