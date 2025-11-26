@@ -11,4 +11,9 @@ public class Case {
         }
 
     }
+    
+    public void place(Case oldCase){
+        piece=oldCase.piece;
+        oldCase.piece=null;
+    }
 }
