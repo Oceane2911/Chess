@@ -1,12 +1,13 @@
-public abstract class Piece {
-    char name;
+public abstract class Piece  {
+    private char name;
+    private char team;
 
-    public Piece(char name, String couleur) {
+    Piece(char name, char team) {
         this.name = name;
-        System.out.println("dans piece :" + this.name);
+        this.team = team;
     }
-    public char getName(){
-        return name;
+    String display (){
+        return (team =='W'? Terminal.ANSI_PURPLE: Terminal.ANSI_BLUE)+ name + Terminal.ANSI_RESET;
     }
     public abstract void move();
 }

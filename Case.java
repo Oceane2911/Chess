@@ -1,12 +1,14 @@
 public class Case {
 
     public Piece piece = null;
-    // public Piece pieceName = new Piece('R');
 
-    String display() {
-        
-
-            return  " ";
+    public String display() {
+        if (piece == null){
+                return  " ";
+        }
+        else{
+            return piece.display();
+        }
 
     }
 }

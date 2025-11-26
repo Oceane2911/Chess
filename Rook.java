@@ -1,8 +1,7 @@
 class Rook extends Piece {
 
-    public Rook(char name) {
-        super(name);
-        this.name = name;
+    public Rook(char team) {
+        super('R',team);
     
     }
 

@@ -1,12 +1,14 @@
 class Queen extends Piece {
 
-    public Queen(char name){
-        super(name);
-        this.name = 'R';
+    public Queen( char team) {
+        super('Q',team);
+    
     }
+
+    
     @Override
     public void move() {
-        
+        System.out.println();
     }
 
 }
