@@ -15,8 +15,10 @@ public class Interface {
     public Interface() {
         init();
         display();
-        play();
-        display();
+        while (true) {
+            play();
+            display();
+        }
     }
 
     private void init() {
@@ -80,10 +82,36 @@ public class Interface {
 
         System.out.println("Quel est le pion que vous voulez déplacer ?");
         int[] currentLocation = pickCase();
-        System.out.println("Où mettre la pièce ?");
-        int[] newLocation = pickCase();
+        int currentLine = currentLocation[0];
+        int currentColumn = currentLocation[1];
 
-        chess[newLocation[0]][newLocation[1]].place(chess[currentLocation[0]][currentLocation[1]]);
+        Piece selectPiece = chess[currentLine][currentColumn].piece;
+
+        if (selectPiece != null) {
+            int[][] ValidatedMove = selectPiece.move(chess, currentLine, currentColumn);
+
+            System.out.println("Où mettre la pièce ?");
+            int[] newLocation = pickCase();
+            int newLine = newLocation[0];
+            int newColumn = newLocation[1];
+
+            boolean isValidMove = false;
+            System.err.println(isValidMove);
+            for (int index = 0; index < ValidatedMove.length; index++) {
+                if (ValidatedMove[index][0] == newLine && ValidatedMove[index][1] == newColumn) {
+                    isValidMove = true;
+                    break;
+                }
+            }
+
+            if (isValidMove) {
+                chess[newLine][newColumn].place(chess[currentLine][currentColumn]);
+            } else {
+                System.out.println("Déplacement pas possible pour cette pièce ou case inaccessible.");
+            }
+        } else {
+            System.out.println("Veuillez sélectionner une case qui contient une pièce");
+        }
 
     }
 
