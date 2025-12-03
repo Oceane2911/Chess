@@ -21,22 +21,5 @@ class Terminal {
 
   public static Scanner scan = new Scanner(System.in);
 
-  private static char[] letters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
-
-  public static int[] pickCase() {
-
-    String pieceLoc = Terminal.scan.nextLine();
-
-    char columnLetters = pieceLoc.charAt(0);
-    int line = 7 - ((pieceLoc.charAt(1) - '0') - 1);
-
-    int column = 0;
-    for (int i = 0; i < letters.length; i++) {
-      if (letters[i] == columnLetters) {
-        column = i;
-      }
-    }
-    int[] response = { line, column };
-    return response;
-  }
+ 
 }

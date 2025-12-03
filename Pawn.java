@@ -1,6 +1,6 @@
 class Pawn extends Piece {
 
-    public Pawn(Team team) {
+    public Pawn(char team) {
         super('P', team);
 
     }
@@ -10,8 +10,8 @@ class Pawn extends Piece {
         /**
          * direction possible of the piece
          */
-        int directionMove = (getTeam() == Team.WHITE) ? -1 : 1;
-        int initialLine = (getTeam() == Team.WHITE) ? 6 : 1;
+        int directionMove = (team == 'W') ? -1 : 1;
+        int initialLine = (team == 'W') ? 6 : 1;
         /** count for the multiplication of the move */
         int countMove = 0;
 
@@ -41,7 +41,7 @@ class Pawn extends Piece {
             if (captureLine >= 0 && captureLine < 8 && captureColumn >= 0 && captureColumn < 8) {
                 Case targetCase = chess[captureLine][captureColumn];
 
-                if (targetCase.piece != null && targetCase.piece.getTeam() != getTeam()) {
+                if (targetCase.piece != null && targetCase.piece.team != this.team) {
                     countMove++;
                 }
             }
@@ -71,7 +71,7 @@ class Pawn extends Piece {
 
             if (captureLine >= 0 && captureLine < 8 && captureColumn >= 0 && captureColumn < 8) {
                 Case targetCase = chess[captureLine][captureColumn];
-                if (targetCase.piece != null && targetCase.piece.getTeam() != getTeam()) {
+                if (targetCase.piece != null && targetCase.piece.team != this.team) {
                     possibleMove[currentIndex][0] = captureLine;
                     possibleMove[currentIndex][1] = captureColumn;
                     currentIndex++;

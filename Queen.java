@@ -1,6 +1,6 @@
 class Queen extends Piece {
 
-    public Queen(Team team) {
+    public Queen(char team) {
         super('Q', team);
 
     }
@@ -42,7 +42,7 @@ class Queen extends Piece {
                  */
                 if (casePossible.piece == null) {
                     countMove++;
-                } else if (casePossible.piece.getTeam() != getTeam()) {
+                } else if (casePossible.piece.team != this.team) {
                     countMove++;
                     break;
                 } else {
@@ -71,7 +71,7 @@ class Queen extends Piece {
                     possibleMove[currentIndex][1] = newColumn;
                     currentIndex++;
 
-                } else if (casePossible.piece.getTeam() != getTeam()) {
+                } else if (casePossible.piece.team != this.team) {
                     possibleMove[currentIndex][0] = newLine;
                     possibleMove[currentIndex][1] = newColumn;
                     currentIndex++;

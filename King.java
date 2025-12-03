@@ -1,5 +1,5 @@
 class King extends Piece {
-    public King(Team team) {
+    public King(char team) {
         super('K', team);
 
     }
@@ -41,7 +41,7 @@ class King extends Piece {
                  */
                 if (casePossible.piece == null) {
                     countMove++;
-                } else if (casePossible.piece.getTeam() != getTeam()) {
+                } else if (casePossible.piece.team != this.team) {
                     countMove++;
                     break;
                 } else {
@@ -70,7 +70,7 @@ class King extends Piece {
                     possibleMove[currentIndex][1] = newColumn;
                     currentIndex++;
 
-                } else if (casePossible.piece.getTeam() != getTeam()) {
+                } else if (casePossible.piece.team != this.team) {
                     possibleMove[currentIndex][0] = newLine;
                     possibleMove[currentIndex][1] = newColumn;
                     currentIndex++;
