@@ -1,10 +1,14 @@
 class Rook extends Piece {
 
-    public Rook(char team) {
+    public Rook(Team team) {
         super('R', team);
 
     }
 
+    @Override
+    public boolean checkMove(Case currentCase, Case nextCase) {
+        return true;
+    }
     @Override
     public int[][] move(Case[][] chess, int row, int column) {
         /**
@@ -40,7 +44,7 @@ class Rook extends Piece {
                  */
                 if (casePossible.piece == null) {
                     countMove++;
-                } else if (casePossible.piece.team != this.team) {
+                } else if (casePossible.piece.getTeam() != getTeam()) {
                     countMove++;
                     break;
                 } else {
@@ -70,7 +74,7 @@ class Rook extends Piece {
                     currentIndex++;
 
                 }
-                else if (casePossible.piece.team != this.team) {
+                else if (casePossible.piece.getTeam() != getTeam()) {
                     possibleMove[currentIndex][0] = newLine;
                     possibleMove[currentIndex][1] = newColumn;
                     currentIndex++;

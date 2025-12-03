@@ -1,7 +1,11 @@
 class Bishop extends Piece {
-    public Bishop(char team) {
-        super('B',team);
-    
+    public Bishop(Team team) {
+        super('B', team);
+
+    }
+    @Override
+    public boolean checkMove(Case currentCase, Case nextCase) {
+        return true;
     }
     @Override
     public int[][] move(Case[][] chess, int row, int column) {
@@ -10,8 +14,8 @@ class Bishop extends Piece {
          * {line, column}
          */
         int[][] directionMove = {
-                { 0, 1 }, { 0, -1 },
-                { 1, 0 }, { -1, 0 }
+                { 1, 1 }, { -1, -1 },
+                { 1, -1 }, { -1, 1 }
         };
         /** count for the multiplication of the move */
         int countMove = 0;
@@ -23,11 +27,11 @@ class Bishop extends Piece {
             int actualLine = directionMove[i][0];
             int actualColumn = directionMove[i][1];
             /** calculte the new place of the piece on the board */
-            for (int j = 0; j < chess.length; j++) {
+            for (int j = 1; j < chess.length; j++) {
                 int newLine = row + actualLine * j;
                 int newColumn = column + actualColumn * j;
                 /** verification of the new line and the new column */
-                if (newLine < 0 || newLine > 8 || newColumn < 0 || newColumn > 8) {
+                if (newLine < 0 || newLine >= 8 || newColumn < 0 || newColumn >= 8) {
                     break;
                 }
                 /** create a object Case with the new position of the piece */
@@ -38,7 +42,7 @@ class Bishop extends Piece {
                  */
                 if (casePossible.piece == null) {
                     countMove++;
-                } else if (casePossible.piece.team != this.team) {
+                } else if (casePossible.piece.getTeam() != getTeam()) {
                     countMove++;
                     break;
                 } else {
@@ -52,22 +56,22 @@ class Bishop extends Piece {
             int actualLine = directionMove[i][0];
             int actualColumn = directionMove[i][1];
             /** calculte the new place of the piece on the board */
-            for (int j = 0; j < chess.length; j++) {
+            for (int j = 1; j < chess.length; j++) {
                 int newLine = row + actualLine * j;
                 int newColumn = column + actualColumn * j;
                 /** verification of the new line and the new column */
-                if (newLine < 0 || newLine > 8 || newColumn < 0 || newColumn > 8) {
+                if (newLine < 0 || newLine >= 8 || newColumn < 0 || newColumn >= 8) {
                     break;
                 }
                 /** create a object Case with the new position of the piece */
                 Case casePossible = chess[newLine][newColumn];
-                if (casePossible == null) {
+
+                if (casePossible.piece == null) {
                     possibleMove[currentIndex][0] = newLine;
                     possibleMove[currentIndex][1] = newColumn;
                     currentIndex++;
 
-                }
-                if (casePossible.piece.team != this.team) {
+                } else if (casePossible.piece.getTeam() != getTeam()) {
                     possibleMove[currentIndex][0] = newLine;
                     possibleMove[currentIndex][1] = newColumn;
                     currentIndex++;

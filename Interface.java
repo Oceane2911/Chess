@@ -1,5 +1,5 @@
 public class Interface {
-    private static char[] letters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
+    private Team turn = Team.WHITE;
     private Case[][] chess = {
             { new Case(), new Case(), new Case(), new Case(), new Case(), new Case(), new Case(), new Case() },
             { new Case(), new Case(), new Case(), new Case(), new Case(), new Case(), new Case(), new Case() },
@@ -22,39 +22,39 @@ public class Interface {
     }
 
     private void init() {
-        chess[0][0].piece = new Rook('B');
-        chess[0][1].piece = new Knight('B');
-        chess[0][2].piece = new Bishop('B');
-        chess[0][3].piece = new Queen('B');
-        chess[0][4].piece = new King('B');
-        chess[0][5].piece = new Bishop('B');
-        chess[0][6].piece = new Knight('B');
-        chess[0][7].piece = new Rook('B');
-        chess[1][0].piece = new Pawn('B');
-        chess[1][1].piece = new Pawn('B');
-        chess[1][2].piece = new Pawn('B');
-        chess[1][3].piece = new Pawn('B');
-        chess[1][4].piece = new Pawn('B');
-        chess[1][5].piece = new Pawn('B');
-        chess[1][6].piece = new Pawn('B');
-        chess[1][7].piece = new Pawn('B');
+        chess[0][0].piece = new Rook(Team.BLACK);
+        chess[0][1].piece = new Knight(Team.BLACK);
+        chess[0][2].piece = new Bishop(Team.BLACK);
+        chess[0][3].piece = new Queen(Team.BLACK);
+        chess[0][4].piece = new King(Team.BLACK);
+        chess[0][5].piece = new Bishop(Team.BLACK);
+        chess[0][6].piece = new Knight(Team.BLACK);
+        chess[0][7].piece = new Rook(Team.BLACK);
+        chess[1][0].piece = new Pawn(Team.BLACK);
+        chess[1][1].piece = new Pawn(Team.BLACK);
+        chess[1][2].piece = new Pawn(Team.BLACK);
+        chess[1][3].piece = new Pawn(Team.BLACK);
+        chess[1][4].piece = new Pawn(Team.BLACK);
+        chess[1][5].piece = new Pawn(Team.BLACK);
+        chess[1][6].piece = new Pawn(Team.BLACK);
+        chess[1][7].piece = new Pawn(Team.BLACK);
 
-        chess[7][0].piece = new Rook('W');
-        chess[7][1].piece = new Knight('W');
-        chess[7][2].piece = new Bishop('W');
-        chess[7][3].piece = new Queen('W');
-        chess[7][4].piece = new King('W');
-        chess[7][5].piece = new Bishop('W');
-        chess[7][6].piece = new Knight('W');
-        chess[7][7].piece = new Rook('W');
-        chess[6][0].piece = new Pawn('W');
-        chess[6][1].piece = new Pawn('W');
-        chess[6][2].piece = new Pawn('W');
-        chess[6][3].piece = new Pawn('W');
-        chess[6][4].piece = new Pawn('W');
-        chess[6][5].piece = new Pawn('W');
-        chess[6][6].piece = new Pawn('W');
-        chess[6][7].piece = new Pawn('W');
+        chess[7][0].piece = new Rook(Team.WHITE);
+        chess[7][1].piece = new Knight(Team.WHITE);
+        chess[7][2].piece = new Bishop(Team.WHITE);
+        chess[7][3].piece = new Queen(Team.WHITE);
+        chess[7][4].piece = new King(Team.WHITE);
+        chess[7][5].piece = new Bishop(Team.WHITE);
+        chess[7][6].piece = new Knight(Team.WHITE);
+        chess[7][7].piece = new Rook(Team.WHITE);
+        chess[6][0].piece = new Pawn(Team.WHITE);
+        chess[6][1].piece = new Pawn(Team.WHITE);
+        chess[6][2].piece = new Pawn(Team.WHITE);
+        chess[6][3].piece = new Pawn(Team.WHITE);
+        chess[6][4].piece = new Pawn(Team.WHITE);
+        chess[6][5].piece = new Pawn(Team.WHITE);
+        chess[6][6].piece = new Pawn(Team.WHITE);
+        chess[6][7].piece = new Pawn(Team.WHITE);
     };
 
     private void display() {
@@ -79,57 +79,46 @@ public class Interface {
     }
 
     private void play() {
+        Piece selectPiece = null;
+        while (true) {
+            System.out.println("Quel est le pion que vous voulez déplacer ?");
+            int[] currentLocation = Terminal.pickCase();
+            int currentLine = currentLocation[0];
+            int currentColumn = currentLocation[1];
 
-        System.out.println("Quel est le pion que vous voulez déplacer ?");
-        int[] currentLocation = pickCase();
-        int currentLine = currentLocation[0];
-        int currentColumn = currentLocation[1];
+            selectPiece = chess[currentLine][currentColumn].piece;
+            if (selectPiece != null && selectPiece.getTeam() == turn) {
+                break;
+            }
+            System.err.println("La case choisi est vide ou occuper par l'adversaire, il faut recommencer");
 
-        Piece selectPiece = chess[currentLine][currentColumn].piece;
+            turn = turn == Team.WHITE ? Team.BLACK : Team.WHITE;
 
-        if (selectPiece != null) {
-            int[][] ValidatedMove = selectPiece.move(chess, currentLine, currentColumn);
+            if (selectPiece != null) {
+                int[][] ValidatedMove = selectPiece.move(chess, currentLine, currentColumn);
 
-            System.out.println("Où mettre la pièce ?");
-            int[] newLocation = pickCase();
-            int newLine = newLocation[0];
-            int newColumn = newLocation[1];
+                System.out.println("Où mettre la pièce ?");
+                int[] newLocation = Terminal.pickCase();
+                int newLine = newLocation[0];
+                int newColumn = newLocation[1];
 
-            boolean isValidMove = false;
-            System.err.println(isValidMove);
-            for (int index = 0; index < ValidatedMove.length; index++) {
-                if (ValidatedMove[index][0] == newLine && ValidatedMove[index][1] == newColumn) {
-                    isValidMove = true;
-                    break;
+                boolean isValidMove = false;
+                for (int index = 0; index < ValidatedMove.length; index++) {
+                    if (ValidatedMove[index][0] == newLine && ValidatedMove[index][1] == newColumn) {
+                        isValidMove = true;
+                        break;
+                    }
                 }
-            }
 
-            if (isValidMove) {
-                chess[newLine][newColumn].place(chess[currentLine][currentColumn]);
+                if (isValidMove) {
+                    chess[newLine][newColumn].place(chess[currentLine][currentColumn]);
+                } else {
+                    System.out.println("Déplacement pas possible pour cette pièce ou case inaccessible.");
+                }
             } else {
-                System.out.println("Déplacement pas possible pour cette pièce ou case inaccessible.");
+                System.out.println("Veuillez sélectionner une case qui contient une pièce");
             }
-        } else {
-            System.out.println("Veuillez sélectionner une case qui contient une pièce");
+
         }
-
     }
-
-    private int[] pickCase() {
-
-        String pieceLoc = Terminal.scan.nextLine();
-
-        char columnLetters = pieceLoc.charAt(0);
-        int line = 7 - ((pieceLoc.charAt(1) - '0') - 1);
-
-        int column = 0;
-        for (int i = 0; i < letters.length; i++) {
-            if (letters[i] == columnLetters) {
-                column = i;
-            }
-        }
-        int[] response = { line, column };
-        return response;
-    }
-
 }

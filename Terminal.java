@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-class Terminal{
+class Terminal {
   public static final String ANSI_RESET = "\u001B[0m";
   public static final String ANSI_BLACK = "\u001B[30m";
   public static final String ANSI_RED = "\u001B[31m";
@@ -19,7 +19,24 @@ class Terminal{
   public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
   public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
- 
- public static Scanner scan = new Scanner(System.in);
+  public static Scanner scan = new Scanner(System.in);
 
+  private static char[] letters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' };
+
+  public static int[] pickCase() {
+
+    String pieceLoc = Terminal.scan.nextLine();
+
+    char columnLetters = pieceLoc.charAt(0);
+    int line = 7 - ((pieceLoc.charAt(1) - '0') - 1);
+
+    int column = 0;
+    for (int i = 0; i < letters.length; i++) {
+      if (letters[i] == columnLetters) {
+        column = i;
+      }
+    }
+    int[] response = { line, column };
+    return response;
+  }
 }

@@ -1,15 +1,20 @@
 public abstract class Piece {
     private char name;
-    protected char team;
+    private Team team;
 
-    Piece(char name, char team) {
+    Piece(char name, Team team) {
         this.name = name;
         this.team = team;
     }
 
+
+    public Team getTeam(){
+        return team;
+    } 
     String display() {
-        return (team == 'W' ? Terminal.ANSI_PURPLE : Terminal.ANSI_BLUE) + name + Terminal.ANSI_RESET;
+        return (team == Team.WHITE? Terminal.ANSI_PURPLE : Terminal.ANSI_BLUE) + name + Terminal.ANSI_RESET;
     }
 
+    public abstract boolean checkMove(Case currentCase, Case nextCase);
     public abstract int[][] move(Case[][] chess, int row, int column);
 }

@@ -1,82 +1,82 @@
 class Pawn extends Piece {
 
-    public Pawn(char team) {
+    public Pawn(Team team) {
         super('P', team);
 
     }
-
+    @Override
+    public boolean checkMove(Case currentCase, Case nextCase) {
+        return true;
+    }
     @Override
     public int[][] move(Case[][] chess, int row, int column) {
         /**
          * direction possible of the piece
-         * {line, column}
          */
-        int[][] directionMove = {
-                { 0, 1 }, { 0, -1 },
-                { 1, 0 }, { -1, 0 }
-        };
+        int directionMove = (getTeam() == Team.WHITE) ? -1 : 1;
+        int initialLine = (getTeam() == Team.WHITE) ? 6 : 1;
         /** count for the multiplication of the move */
         int countMove = 0;
+
+        int nextLine = row + directionMove;
         /**
-         * loop on the possible direction of the piece to extract the actual line and
-         * the actual column of the piece on the board
+         * verification of the new Line
          */
-        for (int i = 0; i < directionMove.length; i++) {
-            int actualLine = directionMove[i][0];
-            int actualColumn = directionMove[i][1];
-            /** calculte the new place of the piece on the board */
-            for (int j = 1; j < chess.length; j++) {
-                int newLine = row + actualLine * j;
-                int newColumn = column + actualColumn * j;
-                /** verification of the new line and the new column */
-                if (newLine < 0 || newLine >= 8 || newColumn < 0 || newColumn >= 8) {
-                    break;
-                }
-                /** create a object Case with the new position of the piece */
-                Case casePossible = chess[newLine][newColumn];
-                /**
-                 * verification of the case is empty or not and what the team of the piece on
-                 * new case
-                 */
-                if (casePossible.piece == null) {
+        if (nextLine >= 0 && nextLine < 8 && chess[nextLine][column].piece == null) {
+            countMove++;
+            if (row == initialLine) {
+                int stepLineTwo = row + 2 * directionMove;
+                if (stepLineTwo >= 0 && stepLineTwo < 8 && chess[stepLineTwo][column].piece == null) {
                     countMove++;
-                } else if (casePossible.piece.team != this.team) {
-                    countMove++;
-                    break;
-                } else {
-                    break;
                 }
             }
         }
+        /** table for the capture of the pawn */
+        int[][] capture = {
+                { directionMove, -1 },
+                { directionMove, 1 }
+        };
+        for (int i = 0; i < capture.length; i++) {
+            int captureLine = row + capture[i][0];
+            int captureColumn = column + capture[i][1];
+
+            if (captureLine >= 0 && captureLine < 8 && captureColumn >= 0 && captureColumn < 8) {
+                Case targetCase = chess[captureLine][captureColumn];
+
+                if (targetCase.piece != null && targetCase.piece.getTeam() != getTeam()) {
+                    countMove++;
+                }
+            }
+
+        }
         int[][] possibleMove = new int[countMove][2];
         int currentIndex = 0;
-        for (int i = 0; i < directionMove.length; i++) {
-            int actualLine = directionMove[i][0];
-            int actualColumn = directionMove[i][1];
-            /** calculte the new place of the piece on the board */
-            for (int j = 1; j < chess.length; j++) {
-                int newLine = row + actualLine * j;
-                int newColumn = column + actualColumn * j;
-                /** verification of the new line and the new column */
-                if (newLine < 0 || newLine >= 8 || newColumn < 0 || newColumn >= 8) {
-                    break;
+        nextLine = row + directionMove;
+        if (nextLine >= 0 && nextLine < 8 && chess[nextLine][column].piece == null) {
+            possibleMove[currentIndex][0] = nextLine;
+            possibleMove[currentIndex][1] = column;
+            currentIndex++;
+
+            if (row == initialLine) {
+                int stepLineTwo = row + 2 * directionMove;
+                if (stepLineTwo >= 0 && stepLineTwo < 8 && chess[stepLineTwo][column].piece == null) {
+                    possibleMove[currentIndex][0] = stepLineTwo;
+                    possibleMove[currentIndex][1] = column;
+                    currentIndex++;
                 }
-                /** create a object Case with the new position of the piece */
-                Case casePossible = chess[newLine][newColumn];
+            }
+        }
 
-                if (casePossible.piece == null) {
-                    possibleMove[currentIndex][0] = newLine;
-                    possibleMove[currentIndex][1] = newColumn;
+        for (int i = 0; i < capture.length; i++) {
+            int captureLine = row + capture[i][0];
+            int captureColumn = column + capture[i][1];
+
+            if (captureLine >= 0 && captureLine < 8 && captureColumn >= 0 && captureColumn < 8) {
+                Case targetCase = chess[captureLine][captureColumn];
+                if (targetCase.piece != null && targetCase.piece.getTeam() != getTeam()) {
+                    possibleMove[currentIndex][0] = captureLine;
+                    possibleMove[currentIndex][1] = captureColumn;
                     currentIndex++;
-
-                } else if (casePossible.piece.team != this.team) {
-                    possibleMove[currentIndex][0] = newLine;
-                    possibleMove[currentIndex][1] = newColumn;
-                    currentIndex++;
-                    break;
-
-                } else {
-                    break;
                 }
             }
         }

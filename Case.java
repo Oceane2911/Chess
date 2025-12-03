@@ -12,8 +12,16 @@ public class Case {
 
     }
     
-    public void place(Case oldCase){
+    public boolean place(Case oldCase){
+        if (oldCase.piece==null) {
+            return false;
+        }
+
+        if(!oldCase.piece.checkMove(oldCase,this)){
+            return false;
+        }
         piece=oldCase.piece;
         oldCase.piece=null;
+        return true;
     }
 }
