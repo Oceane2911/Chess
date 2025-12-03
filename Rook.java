@@ -5,10 +5,7 @@ class Rook extends Piece {
 
     }
 
-    @Override
-    public boolean checkMove(Case currentCase, Case nextCase) {
-        return true;
-    }
+
     @Override
     public int[][] move(Case[][] chess, int row, int column) {
         /**
@@ -73,8 +70,7 @@ class Rook extends Piece {
                     possibleMove[currentIndex][1] = newColumn;
                     currentIndex++;
 
-                }
-                else if (casePossible.piece.getTeam() != getTeam()) {
+                } else if (casePossible.piece.getTeam() != getTeam()) {
                     possibleMove[currentIndex][0] = newLine;
                     possibleMove[currentIndex][1] = newColumn;
                     currentIndex++;

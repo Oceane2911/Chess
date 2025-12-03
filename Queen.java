@@ -4,10 +4,7 @@ class Queen extends Piece {
         super('Q', team);
 
     }
-    @Override
-    public boolean checkMove(Case currentCase, Case nextCase) {
-        return true;
-    }
+
     @Override
     public int[][] move(Case[][] chess, int row, int column) {
         /**

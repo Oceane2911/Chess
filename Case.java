@@ -17,9 +17,6 @@ public class Case {
             return false;
         }
 
-        if(!oldCase.piece.checkMove(oldCase,this)){
-            return false;
-        }
         piece=oldCase.piece;
         oldCase.piece=null;
         return true;

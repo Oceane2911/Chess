@@ -4,10 +4,7 @@ class Pawn extends Piece {
         super('P', team);
 
     }
-    @Override
-    public boolean checkMove(Case currentCase, Case nextCase) {
-        return true;
-    }
+
     @Override
     public int[][] move(Case[][] chess, int row, int column) {
         /**
@@ -31,6 +28,7 @@ class Pawn extends Piece {
                 }
             }
         }
+        
         /** table for the capture of the pawn */
         int[][] capture = {
                 { directionMove, -1 },

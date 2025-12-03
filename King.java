@@ -3,10 +3,7 @@ class King extends Piece {
         super('K', team);
 
     }
-    @Override
-    public boolean checkMove(Case currentCase, Case nextCase) {
-        return true;
-    }
+  
     @Override
     public int[][] move(Case[][] chess, int row, int column) {
         /**

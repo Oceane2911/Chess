@@ -5,10 +5,6 @@ class Knight extends Piece {
 
     }
     @Override
-    public boolean checkMove(Case currentCase, Case nextCase) {
-        return true;
-    }
-    @Override
     public int[][] move(Case[][] chess, int row, int column) {
         /**
          * direction possible of the piece

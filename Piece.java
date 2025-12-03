@@ -14,7 +14,5 @@ public abstract class Piece {
     String display() {
         return (team == Team.WHITE? Terminal.ANSI_PURPLE : Terminal.ANSI_BLUE) + name + Terminal.ANSI_RESET;
     }
-
-    public abstract boolean checkMove(Case currentCase, Case nextCase);
     public abstract int[][] move(Case[][] chess, int row, int column);
 }
